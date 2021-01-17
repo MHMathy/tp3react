@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function Weather({posInfo,setLocationWeather}){
     let [weatherInfo,setWeatherInfo] = useState([]);
+    let [weatherInfoLocation,setWeatherInfoLocation] = useState("");
     let [weatherID,setWeatherID] = useState("");
     useEffect(() => {
         const fetchWeather = () => {
@@ -30,7 +31,10 @@ export default function Weather({posInfo,setLocationWeather}){
     useEffect(()=>{
         if(weatherInfo!=[]){
             let temp = weatherInfo["consolidated_weather"];
-            if(temp!=undefined)setLocationWeather(temp[0]["weather_state_name"])
+            if(temp!=undefined) {
+                setLocationWeather(temp[0]["weather_state_name"])
+                setWeatherInfoLocation(temp[0]["weather_state_name"])
+            }
         }
 
         return(
@@ -39,7 +43,13 @@ export default function Weather({posInfo,setLocationWeather}){
     },[weatherInfo])
 
     return(
-        <div className="info météo"></div>
+        <>
+            <div className="infoMeteo">
+                <h1>{weatherInfo["title"]}</h1>
+                <p>{weatherInfoLocation}</p>
+            </div>
+        </>
+
     )
 
 }
